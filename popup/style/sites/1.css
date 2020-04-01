@@ -1,0 +1,12 @@
+
+
+.current {
+    color: white !important;
+    background: rgb(3, 207, 93);
+    transition: all .3s;
+}
+
+.current:hover{
+    background: rgb(3, 147, 74);
+    transition: all .3s;
+}

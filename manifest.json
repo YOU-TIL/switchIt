@@ -1,0 +1,27 @@
+{
+  "name": "switch-accounts",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "계정을 빠르게 전환해주는 확장 프로그램입니다.",
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Switch Accounts",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "https://*/*",
+    "http://*/*",
+    "tabs",
+    "storage",
+    "cookies"
+  ],
+  "icons": {
+    "128": "icon.png"
+  }
+}

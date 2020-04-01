@@ -1,0 +1,12 @@
+
+
+.current {
+    color: black !important;
+    background: #F7E600;
+    transition: all .3s;
+}
+
+.current:hover{
+    background: #99706a;
+    transition: all .3s;
+}

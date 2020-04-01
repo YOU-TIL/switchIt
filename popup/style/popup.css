@@ -1,0 +1,110 @@
+@font-face {
+    font-family: "NSL";
+    src: url(../res/NSL.ttf);
+}
+
+
+* {
+    font-family: "NSL" !important;
+}
+
+body {
+    width: 300px;
+    height: 450px;
+    overflow: hidden;
+}
+
+#addAccounts {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 30px;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    background: #f1f1f1;
+    font-size: 180%;
+    cursor: pointer;
+    line-height: 30px;
+}
+
+#logo {
+    height: 50px;
+}
+
+#logoContainer {
+    padding: 10px;
+    margin: 0;
+    top: 0;
+    left: 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    height: 95px;
+    background: white;
+    transition: box-shadow .3s;
+}
+
+.card {
+    width: 250px;
+    height: 40px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    margin: 8px;
+    font-size: 330%;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: black;
+    background: white;
+    transition: all .3s;
+}
+
+.cardRipple {
+    width: 270px;
+    height: 60px;
+    margin-top: -55px;
+    margin-left: -10px;
+    border-radius: 10px;
+    position: initial;
+}
+
+.card:hover {
+    background: #dddddd;
+    box-shadow: 0 36px 40px 0 rgba(0, 0, 0, 0.3), 0 10px 26px 0 rgba(0, 0, 0, 0.29);
+    transition: all .3s;
+}
+
+.current:hover {
+    box-shadow: 0 36px 40px 0 rgba(0, 0, 0, 0.3), 0 10px 26px 0 rgba(0, 0, 0, 0.29);
+    transition: all .3s;
+}
+
+#cardContainer {
+    margin-top: 110px;
+    padding: 10px;
+}
+
+
+.secShadow {
+    box-shadow: 0 16px 20px 0 rgba(0, 0, 0, 0.3), 0 10px 26px 0 rgba(0, 0, 0, 0.29);
+    transition: box-shadow .3s;
+}
+
+::-webkit-scrollbar {
+    width: 7px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
