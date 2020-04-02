@@ -98,7 +98,7 @@ function addAccounts() {
         if (siteType == sites.Kakao) chrome.tabs.create({url: "https://logins.daum.net/accounts/loginform.do"});
         if (siteType == sites.Nate) chrome.tabs.create({url: "http://xo.nate.com/Login.sk"});
         if (siteType == sites.Microsoft) chrome.tabs.create({url: "http://xo.nate.com/Login.sk"});
-        if (siteType == sites.Dcinside) chrome.tabs.create({url: "https://dcid.dcinside.com/join/login.php"});
+        if (siteType == sites.Dcinside) chrome.tabs.create({url: "https://dcid.dcinside.com/join/login.php?s_url=http%3A%2F%2Fgall.dcinside.com"});
         window.close();
     }, 100)
 }

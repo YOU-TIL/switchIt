@@ -83,6 +83,7 @@ async function getLoginInfo(siteType) {
         }
         if (siteType == sites.Dcinside) {
             res = Object();
+            if ((await (await fetch('https://gallog.dcinside.com/')).text()).toString().split('script').length > 4) throw new Error("Not Logined");
             res.id = (await (await fetch('https://gallog.dcinside.com/')).text()).toString().split('");</script>')[0].split('/').reverse()[0];
             res.cookie = Object();
             await getCookie('https://www.dcinside.com', 'PHPSESSID').then((cookie) => {
@@ -111,7 +112,7 @@ function login(loginSite, loginId) {
             if (siteType == sites.Naver) loginLink = 'https://nid.naver.com/nidlogin.login';
             if (siteType == sites.Daum || siteType == sites.Kakao) loginLink = 'https://logins.daum.net/accounts/loginform.do';
             if (siteType == sites.Nate) loginLink = 'http://xo.nate.com/Login.sk';
-            if (siteType == sites.Dcinside) loginLink = 'https://dcid.dcinside.com/join/login.php';
+            if (siteType == sites.Dcinside) loginLink = 'https://dcid.dcinside.com/join/login.php?s_url=http%3A%2F%2Fgall.dcinside.com';
             chrome.tabs.executeScript(tabs[0].id, {
                 code: `if(confirm('로그인 토큰이 만료되었습니다. 다시 로그인할까요?')) window.location.href = '${loginLink}'`
             });
