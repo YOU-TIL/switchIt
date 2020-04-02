@@ -1,0 +1,11 @@
+
+.current {
+    color: white !important;
+    background: #3A4690;
+    transition: all .3s;
+}
+
+.current:hover {
+    background: #3A4690;
+    transition: all .3s;
+}

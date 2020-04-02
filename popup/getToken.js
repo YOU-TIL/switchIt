@@ -3,8 +3,10 @@ const sites = {
     'Naver': 1,
     'Daum': 2,
     'Kakao': 3,
-    'Nate': 4
-}
+    'Nate': 4,
+    'Microsoft': 5,
+    'Dcinside': 6
+};
 
 let reTry = 0;
 
@@ -79,6 +81,17 @@ async function getLoginInfo(siteType) {
                 res.cookie['SFN'] = cookie;
             });
         }
+        if (siteType == sites.Dcinside) {
+            res = Object();
+            res.id = (await (await fetch('https://gallog.dcinside.com/')).text()).toString().split('");</script>')[0].split('/').reverse()[0];
+            res.cookie = Object();
+            await getCookie('https://www.dcinside.com', 'PHPSESSID').then((cookie) => {
+                res.cookie['PHPSESSID'] = cookie;
+            });
+            await getCookie('https://www.dcinside.com', 'PHPSESSKEY').then((cookie) => {
+                res.cookie['PHPSESSKEY'] = cookie;
+            });
+        }
     } catch (e) {
         res = null;
     }
@@ -94,11 +107,13 @@ function login(loginSite, loginId) {
                     id: loginId
                 }
             });
-            if (siteType == sites.Naver) code = `if(confirm('로그인 토큰이 만료되었습니다. 다시 로그인할까요?')) window.location.href = 'https://nid.naver.com/nidlogin.login';`
-            if (siteType == sites.Daum || siteType == sites.Kakao) code = `if(confirm('로그인 토큰이 만료되었습니다. 다시 로그인할까요?')) window.location.href = 'https://logins.daum.net/accounts/loginform.do';`
-            if (siteType == sites.Nate) code = `if(confirm('로그인 토큰이 만료되었습니다. 다시 로그인할까요?')) window.location.href = 'http://xo.nate.com/Login.sk';`
+            let loginLink;
+            if (siteType == sites.Naver) loginLink = 'https://nid.naver.com/nidlogin.login';
+            if (siteType == sites.Daum || siteType == sites.Kakao) loginLink = 'https://logins.daum.net/accounts/loginform.do';
+            if (siteType == sites.Nate) loginLink = 'http://xo.nate.com/Login.sk';
+            if (siteType == sites.Dcinside) loginLink = 'https://dcid.dcinside.com/join/login.php';
             chrome.tabs.executeScript(tabs[0].id, {
-                code: code
+                code: `if(confirm('로그인 토큰이 만료되었습니다. 다시 로그인할까요?')) window.location.href = '${loginLink}'`
             });
         });
         return;
@@ -110,10 +125,12 @@ function login(loginSite, loginId) {
         if (loginSite == sites.Naver) domain = "naver.com";
         if (loginSite == sites.Daum || loginSite == sites.Kakao) domain = "daum.net";
         if (loginSite == sites.Nate) domain = "nate.com";
+        if (loginSite == sites.Dcinside) domain = "dcinside.com";
 
         if (loginSite == sites.Naver) url = "https://www.naver.com";
         if (loginSite == sites.Daum || loginSite == sites.Kakao) url = "https://www.daum.net";
         if (loginSite == sites.Nate) url = "https://www.nate.com";
+        if (loginSite == sites.Dcinside) url = "https://www.dcinside.com";
 
         for (const i in cookies) {
             try {

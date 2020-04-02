@@ -1,7 +1,7 @@
 let siteType, storageName, cookies;
 
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('addAccounts').addEventListener('click', addAccounts);
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, function (tabs) {
         try {
@@ -11,9 +11,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
             else if (url.split('.').reverse()[1] == 'kakao' && url.split('.').reverse()[0] == 'com') siteType = sites.Kakao;
             else if (url.split('.').reverse()[1] == 'kakaocorp' && url.split('.').reverse()[0] == 'com') siteType = sites.Kakao;
             else if (url.split('.').reverse()[1] == 'nate' && url.split('.').reverse()[0] == 'com') siteType = sites.Nate;
+            else if (url.split('.').reverse()[1] == 'microsoft' && url.split('.').reverse()[0] == 'com') siteType = sites.Microsoft;
+            else if (url.split('.').reverse()[1] == 'live' && url.split('.').reverse()[0] == 'com') siteType = sites.Microsoft;
+            else if (url.split('.').reverse()[1] == 'dcinside' && url.split('.').reverse()[0] == 'com') siteType = sites.Dcinside;
             else siteType = sites.Undifined;
 
-            var cssId = 'myCss';  // you could encode the css path itself to generate id..
+            var cssId = 'myCss';
             if (!document.getElementById(cssId)) {
                 var head = document.getElementsByTagName('head')[0];
                 var link = document.createElement('link');
@@ -26,11 +29,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }
 
             document.getElementById('logo').src = 'logo/' + siteType + '.png';
-            if (siteType != sites.Undifined) document.getElementById('information').innerText = "계정을 선택하세요.";
+            if (siteType !== sites.Undifined) document.getElementById('information').innerText = "계정을 선택하세요.";
             else document.getElementById('information').innerText = "지원하지 않는 사이트입니다.";
             storageName = 's' + siteType.toString();
             chrome.storage.sync.get([storageName], async function (items) {
-                loginInfo = await getLoginInfo(siteType);
+                let loginInfo = await getLoginInfo(siteType);
                 cookies = items[storageName];
                 if (loginInfo == null) {
                     for (const i in cookies) {
@@ -48,18 +51,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     });
                     return;
                 }
-                if (items == null) items = Object();
-                if (items[storageName] == null) items[storageName] = Object();
-                if (siteType != sites.Undifined && loginInfo != null) items[storageName][loginInfo.id] = loginInfo.cookie;
-                chrome.storage.sync.set(items, function () {
+                if (!items) items = Object();
+                if (!items[storageName]) items[storageName] = Object();
+                if (siteType !== sites.Undifined && loginInfo != null) items[storageName][loginInfo.id] = loginInfo.cookie;
+                chrome.storage.sync.set(items, () => {
                     for (const i in cookies) {
-                        if (loginInfo == null) document.getElementById('cardContainer').innerHTML += `<div class='card login' data-site='${siteType}' data-id='${i}'>${i}<div class="cardRipple rippleJS" data-site='${siteType}' data-id='${i}'></div></div>`
+                        if (!loginInfo) document.getElementById('cardContainer').innerHTML += `<div class='card login' data-site='${siteType}' data-id='${i}'>${i}<div class="cardRipple rippleJS" data-site='${siteType}' data-id='${i}'></div></div>`
                         else if (loginInfo.id == i) document.getElementById('cardContainer').innerHTML += `<div class='card login current' data-site='${siteType}' data-id='${i}'>${i}<div class="cardRipple rippleJS" data-site='${siteType}' data-id='${i}'></div></div>`
                         else document.getElementById('cardContainer').innerHTML += `<div class='card login' data-site='${siteType}' data-id='${i}'>${i}<div class="cardRipple rippleJS" data-site='${siteType}' data-id='${i}'></div></div>`
                     }
                     document.getElementById('cardContainer').innerHTML += `<div style="width:100%;height:45px"></div>`;
                     document.querySelectorAll('.login').forEach(obj => {
-                        obj.addEventListener('click', (e) => {
+                        obj.addEventListener('click', e => {
                             document.querySelectorAll('.card').forEach(el => {
                                 el.classList.remove('current');
                             });
@@ -94,6 +97,8 @@ function addAccounts() {
         if (siteType == sites.Daum) chrome.tabs.create({url: "https://logins.daum.net/accounts/loginform.do"});
         if (siteType == sites.Kakao) chrome.tabs.create({url: "https://logins.daum.net/accounts/loginform.do"});
         if (siteType == sites.Nate) chrome.tabs.create({url: "http://xo.nate.com/Login.sk"});
+        if (siteType == sites.Microsoft) chrome.tabs.create({url: "http://xo.nate.com/Login.sk"});
+        if (siteType == sites.Dcinside) chrome.tabs.create({url: "https://dcid.dcinside.com/join/login.php"});
         window.close();
     }, 100)
 }
