@@ -1,6 +1,6 @@
 {
   "name": "switch-accounts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "계정을 빠르게 전환해주는 확장 프로그램입니다.",
   "background": {
