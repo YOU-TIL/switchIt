@@ -31,13 +31,16 @@ async function getLoginInfo(siteType) {
     try {
         if (siteType == sites.Naver) {
             res = Object();
-            res.id = (await (await fetch('https://www.naver.com')).text()).toString().split('var isLogin = "')[1].split('"')[0];
+            res.id = (await (await fetch('https://www.naver.com')).text()).toString().split('isLogin: "')[1].split('"')[0];
             res.cookie = Object();
             await getCookie('https://www.naver.com', 'NID_AUT').then((cookie) => {
                 res.cookie['NID_AUT'] = cookie;
             });
             await getCookie('https://www.naver.com', 'NID_SES').then((cookie) => {
                 res.cookie['NID_SES'] = cookie;
+            });
+            await getCookie('https://www.naver.com', 'NID_JKL').then((cookie) => {
+                res.cookie['NID_JKL'] = cookie;
             });
         }
         if (siteType == sites.Daum || siteType == sites.Kakao) {
